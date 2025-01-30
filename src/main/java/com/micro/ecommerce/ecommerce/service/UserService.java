@@ -3,8 +3,12 @@ package com.micro.ecommerce.ecommerce.service;
 import com.micro.ecommerce.ecommerce.api.model.RegistrationBody;
 import com.micro.ecommerce.ecommerce.exception.UserAlreadyExistsException;
 import com.micro.ecommerce.ecommerce.model.LocalUser;
+import com.micro.ecommerce.ecommerce.api.model.LoginBody;
 import com.micro.ecommerce.ecommerce.model.dao.LocalUserDAO;
 import org.springframework.stereotype.Service;
+
+
+import java.util.Optional;
 
 /**
  * Service for handling user actions.
@@ -14,12 +18,16 @@ public class UserService {
 
     /** The LocalUserDAO. */
     private final LocalUserDAO localUserDAO;
+    private EncryptionService encryptionService;
+    private JWTService jwtService;
 
     /**
      * Constructor injected by spring.
      */
-    public UserService(LocalUserDAO localUserDAO) {
+    public UserService(LocalUserDAO localUserDAO, EncryptionService encryptionService, JWTService jwtService) {
         this.localUserDAO = localUserDAO;
+        this.encryptionService = encryptionService;
+        this.jwtService = jwtService;
     }
 
     /**
@@ -40,9 +48,24 @@ public class UserService {
         user.setUsername(registrationBody.getUsername());
         user.setFirstName(registrationBody.getFirstName());
         user.setLastName(registrationBody.getLastName());
-        //TODO: Encrypt passwords!!
-        user.setPassword(registrationBody.getPassword());
+        user.setPassword(encryptionService.encryptPassword(registrationBody.getPassword()));
         return localUserDAO.save(user);
+    }
+
+    /**
+     * Logins in a user and provides an authentication token back.
+     * @param loginBody The login request.
+     * @return The authentication token. Null if the request was invalid.
+     */
+    public String loginUser(LoginBody loginBody) {
+        Optional<LocalUser> opUser = localUserDAO.findByUsernameIgnoreCase(loginBody.getUsername());
+        if (opUser.isPresent()) {
+            LocalUser user = opUser.get();
+            if (encryptionService.verifyPassword(loginBody.getPassword(), user.getPassword())) {
+                return jwtService.generateJWT(user);
+            }
+        }
+        return null;
     }
 
 }

@@ -42,3 +42,9 @@ The website will have `users` who can buy an array of `products` in different qu
 - User
 - Address
 - Products+quantities
+
+# LOGIN
+
+1. Adding the spring boot security to the App.
+2. Temporarily put a endpoint security bypass in.
+3. Provide an endpoint for users to login and receive a JWT.

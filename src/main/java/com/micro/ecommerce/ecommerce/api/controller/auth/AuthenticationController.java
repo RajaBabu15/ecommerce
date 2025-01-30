@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.micro.ecommerce.ecommerce.api.model.LoginBody;
+import com.micro.ecommerce.ecommerce.api.model.LoginResponse;
+
 /**
  * Rest Controller for handling authentication requests.
  */
@@ -44,4 +47,15 @@ public class AuthenticationController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginBody loginBody) {
+        String jwt = userService.loginUser(loginBody);
+        if (jwt == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            LoginResponse response = new LoginResponse();
+            response.setJwt(jwt);
+            return ResponseEntity.ok(response);
+        }
+    }
 }
