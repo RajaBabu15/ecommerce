@@ -6,11 +6,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
+
 /**
  * Configuration of the security on endpoints.
  */
 @Configuration
 public class WebSecurityConfig {
+
+    private JWTRequestFilter jwtRequestFilter;
+
+    public WebSecurityConfig(JWTRequestFilter jwtRequestFilter) {
+        this.jwtRequestFilter = jwtRequestFilter;
+    }
 
     /**
      * Filter chain to configure security.
@@ -25,7 +33,11 @@ public class WebSecurityConfig {
                 .cors(AbstractHttpConfigurer::disable);
 
         // Permit all requests
-        http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
+        http.authorizeHttpRequests(authorize -> {
+            authorize.requestMatchers("/product", "/auth/register", "/auth/login").permitAll();
+            authorize.anyRequest().authenticated();
+
+        });
 
         return http.build();
     }

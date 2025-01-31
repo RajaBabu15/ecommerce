@@ -61,6 +61,13 @@ The website will have `users` who can buy an array of `products` in different qu
 3. Test to ensure the correct data is presented.
 
 
+# ENDPOINT SECURITY
+
+1. Make all endpoints secured by authentication by default.
+2. Put exclusions to requiring authentication on specific endpoints.
+3. Test that our authentication on endpoints work.
+
+
 
 
 
