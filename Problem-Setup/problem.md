@@ -53,3 +53,38 @@ The website will have `users` who can buy an array of `products` in different qu
 
 1. Authenticate requests using the JWT token from the login process.
 2. Test that the user is being authenticated or not.
+
+# BASIC STARTER ENDPOINTS
+
+1. Load some sample data into out database.
+2. Create some basic endpoints to get that data.
+3. Test to ensure the correct data is presented.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
