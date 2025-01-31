@@ -48,3 +48,8 @@ The website will have `users` who can buy an array of `products` in different qu
 1. Adding the spring boot security to the App.
 2. Temporarily put a endpoint security bypass in.
 3. Provide an endpoint for users to login and receive a JWT.
+
+# REQUEST_AUTHENTICATION
+
+1. Authenticate requests using the JWT token from the login process.
+2. Test that the user is being authenticated or not.

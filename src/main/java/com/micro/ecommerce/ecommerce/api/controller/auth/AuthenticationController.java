@@ -2,14 +2,13 @@ package com.micro.ecommerce.ecommerce.api.controller.auth;
 
 import com.micro.ecommerce.ecommerce.api.model.RegistrationBody;
 import com.micro.ecommerce.ecommerce.exception.UserAlreadyExistsException;
+import com.micro.ecommerce.ecommerce.model.LocalUser;
 import com.micro.ecommerce.ecommerce.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import com.micro.ecommerce.ecommerce.api.model.LoginBody;
 import com.micro.ecommerce.ecommerce.api.model.LoginResponse;
@@ -58,4 +57,10 @@ public class AuthenticationController {
             return ResponseEntity.ok(response);
         }
     }
+
+    @GetMapping("/me")
+    public LocalUser getLoggedInUserProfile(@AuthenticationPrincipal LocalUser user) {
+        return user;
+    }
+
 }
