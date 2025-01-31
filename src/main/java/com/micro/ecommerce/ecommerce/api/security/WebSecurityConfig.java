@@ -33,6 +33,7 @@ public class WebSecurityConfig {
                 .cors(AbstractHttpConfigurer::disable);
 
         // Permit all requests
+        http.addFilterBefore(jwtRequestFilter, AuthorizationFilter.class);
         http.authorizeHttpRequests(authorize -> {
             authorize.requestMatchers("/product", "/auth/register", "/auth/login").permitAll();
             authorize.anyRequest().authenticated();
