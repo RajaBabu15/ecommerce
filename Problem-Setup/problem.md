@@ -68,6 +68,50 @@ The website will have `users` who can buy an array of `products` in different qu
 3. Test that our authentication on endpoints work.
 
 
+# EMAIL VERIFICATION
+
+1. Decide the email verification workflow.
+2. Download a tool to facilitate SMTP communication testing.
+3. Send an email at user registration with verification link.
+4. Add endpoint to verify the user.
+5. Block logging in if the user is not verified.
+
+```declarative
+
+BEGIN Workflow
+
+# When a user registers
+IF User registers THEN
+    Send email with verification link
+ENDIF
+
+# When a user attempts to login
+IF User attempts login THEN
+    IF User is verified THEN
+        Continue with normal login
+    ELSE
+        IF Email was sent in the last hour THEN
+            Tell them we've recently sent an email
+        ELSE
+            Resend email
+        ENDIF
+    ENDIF
+ENDIF
+
+# When a user uses the verification link
+IF User verification link used THEN
+    IF User is verified THEN
+        Do nothing, they're already verified
+    ELSE
+        Verify the account
+        Provide auth token
+    ENDIF
+ENDIF
+
+END Workflow
+```
+
+
 
 
 

@@ -35,7 +35,7 @@ public class WebSecurityConfig {
         // Permit all requests
         http.addFilterBefore(jwtRequestFilter, AuthorizationFilter.class);
         http.authorizeHttpRequests(authorize -> {
-            authorize.requestMatchers("/product", "/auth/register", "/auth/login").permitAll();
+            authorize.requestMatchers("/product", "/auth/register", "/auth/login", "/auth/verify").permitAll();
             authorize.anyRequest().authenticated();
 
         });

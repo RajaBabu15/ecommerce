@@ -1,4 +1,4 @@
 package com.micro.ecommerce.ecommerce.exception;
 
-public class EmailFailureException {
+public class EmailFailureException extends Exception {
 }
