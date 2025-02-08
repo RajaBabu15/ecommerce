@@ -1,5 +1,14 @@
--- Declare a variable for user id = 4
-DECLARE @userId3 AS INT = 4;
+-- Declare product variables and fetch their values from the product table.
+DECLARE @product1 INT, @product2 INT, @product3 INT, @product4 INT, @product5 INT;
+
+SELECT @product1 = id FROM product WHERE [name] = 'Product #1';
+SELECT @product2 = id FROM product WHERE [name] = 'Product #2';
+SELECT @product3 = id FROM product WHERE [name] = 'Product #3';
+SELECT @product4 = id FROM product WHERE [name] = 'Product #4';
+SELECT @product5 = id FROM product WHERE [name] = 'Product #5';
+
+-- Declare a variable for user id = 4.
+DECLARE @userId3 INT = 4;
 
 -- Insert an address record for user id 4.
 INSERT INTO address (address_line_1, city, country, user_id) 
@@ -22,19 +31,21 @@ SELECT TOP 1 @order6 = id
 FROM web_order 
 WHERE address_id = @address3 AND user_id = @userId3 
 ORDER BY id DESC;
+
 SELECT @order7 = id 
 FROM web_order 
 WHERE address_id = @address3 AND user_id = @userId3 
 ORDER BY id DESC OFFSET 1 ROW FETCH FIRST 1 ROW ONLY;
 
 -- Insert order quantities for the newly created orders.
--- Assumes that the product variables (@product1, @product2, etc.) are already defined.
 INSERT INTO web_order_quantities (order_id, product_id, quantity) 
-VALUES (@order6, @product1, 2);  -- e.g., 2 units of Product #1
-INSERT INTO web_order_quantities (order_id, product_id, quantity) 
-VALUES (@order6, @product4, 1);  -- e.g., 1 unit of Product #4
+VALUES (@order6, @product1, 2);  -- Example: 2 units of Product #1
 
 INSERT INTO web_order_quantities (order_id, product_id, quantity) 
-VALUES (@order7, @product3, 3);  -- e.g., 3 units of Product #3
+VALUES (@order6, @product4, 1);  -- Example: 1 unit of Product #4
+
 INSERT INTO web_order_quantities (order_id, product_id, quantity) 
-VALUES (@order7, @product5, 4);  -- e.g., 4 units of Product #5
+VALUES (@order7, @product3, 3);  -- Example: 3 units of Product #3
+
+INSERT INTO web_order_quantities (order_id, product_id, quantity) 
+VALUES (@order7, @product5, 4);  -- Example: 4 units of Product #5

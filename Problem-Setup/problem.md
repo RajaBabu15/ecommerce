@@ -112,6 +112,10 @@ END Workflow
 ```
 
 
+# UNIT TESTING
+
+1. Build unit tests to test our code for us.
+2. Aim for as high as a code coverage result while being realistic.
 
 
 
